@@ -7,7 +7,5 @@ import vcp.example.springboot.httpbin.model.Bank
 @Service
 class BankService(private val dataSource: BankDataSource) {
 
-    fun getBanks(): Collection<Bank> {
-        return dataSource.getBanks()
-    }
+    fun getBanks(): Collection<Bank> = dataSource.getBanks()
 }
