@@ -6,7 +6,10 @@ import vcp.example.springboot.httpbin.model.Bank
 
 @Repository
 class MockBankDataSource : BankDataSource {
-    val banks = listOf(Bank("1234", 0.0, 1))
+    val banks = listOf(
+            Bank("1234", 0.0, 1),
+            Bank("0002", 1.2, 120),
+    )
 
     override fun getBanks(): Collection<Bank> = banks
 }
