@@ -1,6 +1,7 @@
 package vcp.example.springboot.httpbin.controller
 
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import vcp.example.springboot.httpbin.model.Bank
@@ -12,4 +13,7 @@ class BankController(private val bankService: BankService) {
 
     @GetMapping
     fun getBanks() : Collection<Bank> = bankService.getBanks()
+
+    @GetMapping("/{accountNumber}")
+    fun getBank(@PathVariable accountNumber: String) = "you want data about $accountNumber"
 }

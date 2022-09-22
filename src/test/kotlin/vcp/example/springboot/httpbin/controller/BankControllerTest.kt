@@ -32,4 +32,18 @@ internal class BankControllerTest {
                 }
         
     }
+    
+    @Test
+    fun `should return the bank with given account number`() {
+        //given
+        val accountNumber = "1234"
+        
+        //when
+        //then
+        mockMvc.get("/api/banks/$accountNumber")
+                .andDo { print() }
+                .andExpect {
+                    status { isOk() }
+                }
+    }
 }
