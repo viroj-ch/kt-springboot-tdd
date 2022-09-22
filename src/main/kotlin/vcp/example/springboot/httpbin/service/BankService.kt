@@ -8,6 +8,6 @@ import vcp.example.springboot.httpbin.model.Bank
 class BankService(private val dataSource: BankDataSource) {
 
     fun getBanks(): Collection<Bank> {
-        return emptyList()
+        return dataSource.getBanks()
     }
 }
