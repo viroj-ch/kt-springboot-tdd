@@ -16,7 +16,7 @@ internal class MockBankDataSourceTest {
         val banks = mockDataSource.getBanks()
         
         //then
-        assertThat(banks).isNotEmpty
+        assertThat(banks).hasSizeGreaterThanOrEqualTo(3)
     }
 
     @Test
