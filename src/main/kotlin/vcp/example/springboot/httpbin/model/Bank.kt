@@ -2,7 +2,13 @@ package vcp.example.springboot.httpbin.model
 
 class Bank {
 
-    private var accountNumber: String
+    var accountNumber: String
+        get() {
+            return field
+        }
+        set(value) {
+            field = value
+        }
     private val trust: Double
     private val transactionFee: Int
 
@@ -10,12 +16,6 @@ class Bank {
         this.accountNumber = accountNumber
         this.trust = trust
         this.transactionFee = transactionFee
-    }
-
-    fun getAccountNumber(): String = this.accountNumber
-
-    fun setAccountNumber(accountNumber: String) {
-        this.accountNumber = accountNumber
     }
 
     override fun equals(other: Any?): Boolean {
