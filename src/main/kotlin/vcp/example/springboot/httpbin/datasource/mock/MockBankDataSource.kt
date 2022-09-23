@@ -5,7 +5,7 @@ import vcp.example.springboot.httpbin.datasource.BankDataSource
 import vcp.example.springboot.httpbin.model.Bank
 import java.lang.IllegalArgumentException
 
-@Repository
+@Repository("mock data")
 class MockBankDataSource : BankDataSource {
     val banks = mutableListOf<Bank>(
             Bank("1234", 0.0, 1),
