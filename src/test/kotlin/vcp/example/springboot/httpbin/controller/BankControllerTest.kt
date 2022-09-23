@@ -102,6 +102,10 @@ internal class BankControllerTest @Autowired constructor(
                 .andDo { print() }
                 .andExpect {
                     status { isCreated() }
+                    content { contentType(MediaType.APPLICATION_JSON) }
+                    jsonPath("$.accountNumber") { value("00005")}
+                    jsonPath("$.trust") { value(150.0001)}
+                    jsonPath("$.transactionFee") { value(35)}
                 }
         }
     }

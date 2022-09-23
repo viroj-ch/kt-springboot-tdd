@@ -2,13 +2,7 @@ package vcp.example.springboot.httpbin.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import vcp.example.springboot.httpbin.model.Bank
 import vcp.example.springboot.httpbin.service.BankService
 
@@ -28,7 +22,5 @@ class BankController(private val bankService: BankService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addBank() {
-
-    }
+    fun addBank(@RequestBody bank: Bank) : Bank = bankService.addBank(bank)
 }
