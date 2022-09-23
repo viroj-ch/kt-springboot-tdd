@@ -1,5 +1,6 @@
 package vcp.example.springboot.httpbin.controller
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -11,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
+import vcp.example.springboot.httpbin.model.Bank
 
 
 @SpringBootTest
@@ -19,6 +22,9 @@ internal class BankControllerTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
+
+    @Autowired
+    lateinit var objectMapper: ObjectMapper
 
     private val baseUrl = "/api/banks"
 
@@ -75,6 +81,29 @@ internal class BankControllerTest {
                         status { isNotFound() }
                         content { string("Could not find a bank with account number $accountNumber") }
                     }
+        }
+    }
+
+    @Nested
+    @DisplayName("POST /api/banks")
+    @TestInstance(Lifecycle.PER_CLASS)
+    inner class AddNewBank {
+
+        @Test
+        fun `should add the new bank`() {
+            //given
+            val newBank = Bank("00005", 150.0001, 35)
+            
+            //when
+            mockMvc.post(baseUrl) {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(newBank)
+            }
+                    .andDo { print() }
+                    .andExpect { status { isCreated() } }
+            
+            //then
+
         }
     }
 }
