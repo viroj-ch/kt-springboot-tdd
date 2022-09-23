@@ -71,6 +71,7 @@ internal class BankControllerTest {
                     .andDo { print() }
                     .andExpect {
                         status { isNotFound() }
+                        content { string("Could not find a bank with account number $accountNumber") }
                     }
         }
     }
