@@ -59,5 +59,19 @@ internal class BankControllerTest {
                         jsonPath("$.transactionFee") { value(1)}
                     }
         }
+        
+        @Test
+        fun `should return NOT FOUND if account number does not exist`() {
+            //given
+            val accountNumber = "does_not_xist"
+            
+            //when
+            //then
+            mockMvc.get("/api/banks/$accountNumber")
+                    .andDo { print() }
+                    .andExpect {
+                        status { isNotFound() }
+                    }
+        }
     }
 }
