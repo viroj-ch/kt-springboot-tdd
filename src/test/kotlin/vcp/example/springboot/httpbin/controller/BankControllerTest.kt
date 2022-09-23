@@ -18,13 +18,10 @@ import vcp.example.springboot.httpbin.model.Bank
 
 @SpringBootTest
 @AutoConfigureMockMvc
-internal class BankControllerTest {
-
-    @Autowired
-    lateinit var mockMvc: MockMvc
-
-    @Autowired
-    lateinit var objectMapper: ObjectMapper
+internal class BankControllerTest @Autowired constructor(
+        val mockMvc: MockMvc,
+        val objectMapper: ObjectMapper,
+) {
 
     private val baseUrl = "/api/banks"
 
@@ -95,15 +92,17 @@ internal class BankControllerTest {
             val newBank = Bank("00005", 150.0001, 35)
             
             //when
-            mockMvc.post(baseUrl) {
+            val performPost = mockMvc.post(baseUrl) {
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(newBank)
             }
-                    .andDo { print() }
-                    .andExpect { status { isCreated() } }
-            
-            //then
 
+            //then
+            performPost
+                .andDo { print() }
+                .andExpect {
+                    status { isCreated() }
+                }
         }
     }
 }
