@@ -152,6 +152,10 @@ internal class BankControllerTest @Autowired constructor(
                     .andDo { print() }
                     .andExpect {
                         status { isOk() }
+                        content {
+                            contentType(MediaType.APPLICATION_JSON)
+                            json(objectMapper.writeValueAsString(updateBank))
+                        }
                     }
         }
     }
