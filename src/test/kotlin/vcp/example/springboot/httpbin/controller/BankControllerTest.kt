@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.patch
 import org.springframework.test.web.servlet.post
 import vcp.example.springboot.httpbin.model.Bank
 
@@ -126,6 +127,31 @@ internal class BankControllerTest @Autowired constructor(
                     .andExpect {
                         status { isBadRequest() }
                         content { string("Bank with account number ${newBank.accountNumber} already exists.") }
+                    }
+        }
+    }
+
+    @Nested
+    @DisplayName("PATCH /api/banks")
+    @TestInstance(Lifecycle.PER_CLASS)
+    inner class UpdateBank {
+
+        @Test
+        fun `should update an existing bank`() {
+            //given
+            val updateBank = Bank("1234", 150.0001, 35)
+
+            //when
+            val performPatchRequest = mockMvc.patch(baseUrl) {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(updateBank)
+            }
+
+            //then
+            performPatchRequest
+                    .andDo { print() }
+                    .andExpect {
+                        status { isOk() }
                     }
         }
     }
