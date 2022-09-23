@@ -202,6 +202,27 @@ internal class BankControllerTest @Autowired constructor(
             mockMvc.delete("$baseUrl/$accountNumber")
                     .andDo { print() }
                     .andExpect { status { isNoContent() } }
+
+            mockMvc.get("$baseUrl/$accountNumber")
+                    .andDo { print() }
+                    .andExpect {
+                        status { isNotFound() }
+                    }
+        }
+
+        @Test
+        fun `should return NOT FOUND if given bank does not exist`() {
+            //given
+            val accountNumber = "does_not_exist"
+
+            //when
+            //then
+            mockMvc.delete("$baseUrl/$accountNumber")
+                    .andDo { print() }
+                    .andExpect {
+                        status { isNotFound() }
+                        content { string("Could not find a bank with account number $accountNumber") }
+                    }
         }
     }
 }
