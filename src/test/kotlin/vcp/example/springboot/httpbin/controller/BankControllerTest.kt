@@ -168,5 +168,25 @@ internal class BankControllerTest @Autowired constructor(
                         }
                     }
         }
+        
+        @Test
+        fun `should return BAD REQUEST if given bank does not exist`() {
+            //given
+            val updateBank = Bank("does_not_exist", 150.0001, 35)
+
+            //when
+            val performPatchRequest = mockMvc.patch(baseUrl) {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(updateBank)
+            }
+
+            //then
+            performPatchRequest
+                    .andDo { print() }
+                    .andExpect {
+                        status { isNotFound() }
+                        content { string("Could not find a bank with account number ${updateBank.accountNumber}") }
+                    }
+        }
     }
 }
