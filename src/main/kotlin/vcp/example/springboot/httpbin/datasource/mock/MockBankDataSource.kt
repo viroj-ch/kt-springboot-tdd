@@ -25,4 +25,13 @@ class MockBankDataSource : BankDataSource {
 
         return bank
     }
+
+    override fun update(bank: Bank): Bank {
+        val currentBank = banks.first() { it.accountNumber == bank.accountNumber }
+
+        banks.remove(currentBank)
+        banks.add(bank)
+
+        return bank
+    }
 }

@@ -157,6 +157,16 @@ internal class BankControllerTest @Autowired constructor(
                             json(objectMapper.writeValueAsString(updateBank))
                         }
                     }
+
+            mockMvc.get("$baseUrl/${updateBank.accountNumber}")
+                    .andDo { print() }
+                    .andExpect {
+                        status { isOk() }
+                        content {
+                            contentType(MediaType.APPLICATION_JSON)
+                            json(objectMapper.writeValueAsString(updateBank))
+                        }
+                    }
         }
     }
 }
