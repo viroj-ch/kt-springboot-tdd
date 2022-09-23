@@ -44,6 +44,10 @@ internal class BankControllerTest {
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
+                    content { contentType(MediaType.APPLICATION_JSON) }
+                    jsonPath("$.accountNumber") { value("1234")}
+                    jsonPath("$.trust") { value(0.0)}
+                    jsonPath("$.transactionFee") { value(1)}
                 }
     }
 }
