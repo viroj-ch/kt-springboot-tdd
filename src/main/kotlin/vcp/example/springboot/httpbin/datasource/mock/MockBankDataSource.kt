@@ -3,6 +3,7 @@ package vcp.example.springboot.httpbin.datasource.mock
 import org.springframework.stereotype.Repository
 import vcp.example.springboot.httpbin.datasource.BankDataSource
 import vcp.example.springboot.httpbin.model.Bank
+import java.lang.IllegalArgumentException
 
 @Repository
 class MockBankDataSource : BankDataSource {
@@ -17,6 +18,9 @@ class MockBankDataSource : BankDataSource {
             ?: throw NoSuchElementException("Could not find a bank with account number $accountNumber")
 
     override fun addBank(bank: Bank): Bank {
+        if (banks.any {it.accountNumber == bank.accountNumber}) {
+            throw IllegalArgumentException("Bank with account number ${bank.accountNumber} already exists.")
+        }
         banks.add(bank)
 
         return bank
