@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import vcp.example.springboot.httpbin.model.Bank
 import vcp.example.springboot.httpbin.service.BankService
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/banks")
@@ -26,7 +27,7 @@ class BankController(private val bankService: BankService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addBank(@RequestBody bank: Bank) : Bank = bankService.addBank(bank)
+    fun addBank(@Valid @RequestBody bank: Bank) : Bank = bankService.addBank(bank)
 
     @PatchMapping
     fun updateBank(@RequestBody bank: Bank) : Bank = bankService.updateBank(bank)

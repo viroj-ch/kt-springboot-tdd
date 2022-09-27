@@ -126,6 +126,30 @@ internal class BankControllerTest @Autowired constructor(
                         content { string("Bank with account number ${newBank.accountNumber} already exists.") }
                     }
         }
+
+        @Test
+        fun `should return BAD REQUEST if given bank account number is blank`() {
+            //given
+            val newBank = Bank("", 150.0001, 35)
+
+            //when
+            val performPost = mockMvc.post(baseUrl) {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(newBank)
+            }
+
+            //then
+            performPost
+                    .andDo { print() }
+                    .andExpect {
+                        status { isBadRequest() }
+                        content {
+                            contentType(MediaType.APPLICATION_JSON)
+                            jsonPath("$.violation[0].field") {value("accountNumber")}
+                            jsonPath("$.violation[0].message") {value("must not be blank")}
+                        }
+                    }
+        }
     }
 
     @Nested
